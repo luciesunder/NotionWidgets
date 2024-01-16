@@ -4,7 +4,49 @@
     box-sizing: border-box;
 }
 
-body{
-    font-family: "VT323", monospace;
-    font-size: 25px;
+body {
+    font-family: 'VT323', monospace;
+    background-color: #282c34;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: white;
+}
+
+.container {
+    width: 300px;
+}
+
+.screen {
+    height: 100px;
+    background-color: #44475a;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.keyboard{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+}
+
+.keyboard__row{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.keyboard__key {
+    height: 60px;
+    background-color: #44475a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
 }
