@@ -42,7 +42,7 @@ body {
     gap:10px;
 }
 
-#equals {
+.equals {
     grid-column: 3 / span 2;
 }
 
