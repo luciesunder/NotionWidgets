@@ -39,6 +39,11 @@ body {
 .keyboard__row{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    gap:10px;
+}
+
+#equals {
+    grid-column: 3 / span 2;
 }
 
 .keyboard__key {
