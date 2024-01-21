@@ -30,13 +30,13 @@ body {
     border-radius: 10px;
 }
 
-.keyboard{
+.calculator{
     display: grid;
     grid-template-columns: repeat(1, 1fr);
     gap: 10px;
 }
 
-.keyboard__row{
+.calculator__row{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap:10px;
@@ -46,7 +46,7 @@ body {
     grid-column: 3 / span 2;
 }
 
-.keyboard__key {
+.calculator__key {
     height: 60px;
     background-color: #44475a;
     display: flex;
