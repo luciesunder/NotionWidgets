@@ -2,6 +2,7 @@ const numberButtons = document.getElementsByClassName('number');
 const operatorButtons = document.getElementsByClassName('operator');
 const resultButton = document.getElementsByClassName('equals').item(0);
 const clearButton = document.getElementsByClassName('clear').item(0);
+const backspaceButton = document.getElementsByClassName('backspace').item(0);
 
 let shouldClearResult = false;
 
@@ -31,7 +32,17 @@ function clear() {
     document.getElementById("result").innerText = "";
 }
 
+function backsapce() {
+    if (shouldClearResult) {
+        clear();
+        shouldClearResult = false;
+    }
+    const operation = document.getElementById("operation").innerText;
+    document.getElementById("operation").innerText = operation.slice(0, -1);
+}
+
 addEventListenerToElements(numberButtons, addToOperation);
 addEventListenerToElements(operatorButtons, addToOperation);
 resultButton.addEventListener('click', calculate);
 clearButton.addEventListener('click', clear);
+backspaceButton.addEventListener('click', backsapce);
