@@ -3,7 +3,7 @@ const calculatorData = {
     result: "",
     displayResult: false
 }
-const operatorRegex = /[\+\-\*\/.]/
+const operatorRegex = /[\+\-\*\/]/
 const operationScreen = document.querySelector(".operation")
 const resultScreen = document.querySelector(".result")
 
@@ -118,5 +118,33 @@ function handleDeleteClick() {
     else {
         calculatorData.operation = calculatorData.operation.slice(0, -1)
         operationScreen.textContent = calculatorData.operation
+    }
+}
+
+const decimalButton = document.querySelector("[data-action='.']")
+decimalButton.addEventListener("click", handleDecimalClick);
+
+function handleDecimalClick() {
+    if (calculatorData.displayResult) {
+        calculatorData.operation = "0.";
+        calculatorData.displayResult = false;
+        operationScreen.textContent = calculatorData.operation;
+        resultScreen.textContent = "";
+    }
+    else if (!calculatorData.operation) {
+        calculatorData.operation = "0.";
+        operationScreen.textContent = calculatorData.operation;
+    }
+    else if (calculatorData.operation.slice(-1).match(operatorRegex)) {
+        calculatorData.operation += "0.";
+        operationScreen.textContent = calculatorData.operation;
+    }
+    else if (calculatorData.operation === "0") {
+        calculatorData.operation += ".";
+        operationScreen.textContent = calculatorData.operation;
+    }
+    else if (!calculatorData.operation.includes(".")) {
+        calculatorData.operation += ".";
+        operationScreen.textContent = calculatorData.operation;
     }
 }
