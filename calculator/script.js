@@ -1,48 +1,42 @@
-const numberButtons = document.getElementsByClassName('number');
-const operatorButtons = document.getElementsByClassName('operator');
-const resultButton = document.getElementsByClassName('equals').item(0);
-const clearButton = document.getElementsByClassName('clear').item(0);
-const backspaceButton = document.getElementsByClassName('backspace').item(0);
+const calculatorData = {
+    operation: "",
+    result: "",
+    displayResult: false
+}
 
-let shouldClearResult = false;
+const operationScreen = document.querySelector(".operation")
+const resultScreen = document.querySelector(".result")
 
-function addEventListenerToElements(elements, callback) {
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].addEventListener('click', callback);
+const numberButtons = [...document.querySelectorAll(".number")]
+numberButtons.forEach(btn => btn.addEventListener("click", handleNumberClick))
+
+function handleNumberClick(e) {
+    const buttonValue = e.target.getAttribute("data-action")
+    if (calculatorData.operation === "0") calculatorData.operation = ""
+    calculatorData.operation += buttonValue
+    resultScreen.textContent = calculatorData.operation
+}
+
+
+const operatorbuttons = [...document.querySelectorAll(".operator")]
+operatorbuttons.forEach(btn => btn.addEventListener("click", handleOperatorClick))
+
+function handleOperatorClick(e) {
+    const buttonValue = e.target.getAttribute("data-action")
+
+    if (!calculatorData.operation && buttonValue === "-") {
+        calculatorData.operation += buttonValue
+        resultScreen.textContent = calculatorData.operation
+        return
     }
-}
-
-function addToOperation(e) {
-    if (shouldClearResult) {
-        clear();
-        shouldClearResult = false;
+    else if (calculatorData.operation.slice(-1).match(/[\+\-\*\/]/)) {
+        calculatorData.operation = calculatorData.operation.slice(0, -1) + buttonValue
+        resultScreen.textContent = calculatorData.operation
     }
-    document.getElementById("operation").innerText += e.target.innerText;
-}
-
-function calculate() {
-    const operation = document.getElementById("operation").innerText;
-    const result = eval(operation);
-    document.getElementById("result").innerText = result;
-    shouldClearResult = true;
-}
-
-function clear() {
-    document.getElementById("operation").innerText = "";
-    document.getElementById("result").innerText = "";
-}
-
-function backsapce() {
-    if (shouldClearResult) {
-        clear();
-        shouldClearResult = false;
+    else if (!calculatorData.operation) return
+    else {
+        calculatorData.operation += buttonValue
+        resultScreen.textContent = calculatorData.operation
     }
-    const operation = document.getElementById("operation").innerText;
-    document.getElementById("operation").innerText = operation.slice(0, -1);
-}
 
-addEventListenerToElements(numberButtons, addToOperation);
-addEventListenerToElements(operatorButtons, addToOperation);
-resultButton.addEventListener('click', calculate);
-clearButton.addEventListener('click', clear);
-backspaceButton.addEventListener('click', backsapce);
+}
