@@ -13,6 +13,11 @@ numberButtons.forEach(btn => btn.addEventListener("click", handleNumberClick))
 function handleNumberClick(e) {
     const buttonValue = e.target.getAttribute("data-action")
     if (calculatorData.operation === "0") calculatorData.operation = ""
+    if (calculatorData.displayResult) {
+        calculatorData.operation = ""
+        resultScreen.textContent = ""
+        calculatorData.displayResult = false
+    }
     calculatorData.operation += buttonValue
     operationScreen.textContent = calculatorData.operation
 }
@@ -55,36 +60,63 @@ function handleEqualClick(e) {
     }
 }
 
-
 function calculation(operation) {
-    let numbers = operation.split(operatorRegex)//divise la chaîne en un tableau de nombres
+    let numbers = operation.split(operatorRegex) //divise la chaîne en un tableau de nombres
     let operators = operation.split("").filter(char => char.match(operatorRegex)) //divise la chaîne de l'opération en un tableau de char, puis filtre garder que les opérateurs.
-    let result = Number(numbers[0]) //initialise le résultat avec le premier nombre.
 
     for (let i = 0; i < operators.length; i++) {
         if (operators[i] === "*" || operators[i] === "/") {
             const result = operators[i] === "*"
                 ? Number(numbers[i]) * Number(numbers[i + 1])
-                : Number(numbers[i]) / Number(numbers[i + 1])
+                : Number(numbers[i]) / Number(numbers[i + 1]);
 
-            numbers.splice(i, 2, result)
-            operators.splice(i, 1)
-            i--
+            numbers.splice(i, 2, result);
+            operators.splice(i, 1);
+            i--;
         }
     }
 
+    let result = Number(numbers[0]);
     for (let i = 0; i < operators.length; i++) {
         switch (operators[i]) {
             case "+":
-                result += Number(numbers[i + 1])
-                break
+                result += Number(numbers[i + 1]);
+                break;
             case "-":
-                result -= Number(numbers[i + 1])
-                break
+                result -= Number(numbers[i + 1]);
+                break;
         }
     }
 
-    resultScreen.textContent = result
-    calculatorData.displayResult = true
-    return result
+    resultScreen.textContent = result;
+    calculatorData.displayResult = true;
+    return result;
+}
+
+const resetButton = document.querySelector("[data-action='c']")
+resetButton.addEventListener("click", handleResetClick)
+
+function handleResetClick() {
+    calculatorData.operation = ""
+    calculatorData.displayResult = false
+    calculatorData.result = ""
+    resultScreen.textContent = ""
+    operationScreen.textContent = ""
+}
+
+const deleteButton = document.querySelector("[data-action='ce']")
+deleteButton.addEventListener("click", handleDeleteClick)
+
+function handleDeleteClick() {
+    if (calculatorData.displayResult) {
+        calculatorData.operation = ""
+        calculatorData.displayResult = false
+        calculatorData.result = ""
+        resultScreen.textContent = ""
+        operationScreen.textContent = ""
+    }
+    else {
+        calculatorData.operation = calculatorData.operation.slice(0, -1)
+        operationScreen.textContent = calculatorData.operation
+    }
 }
