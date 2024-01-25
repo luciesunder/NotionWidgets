@@ -61,8 +61,8 @@ body {
     border-radius: 10px;
 }
 
-button[data-action="c"],
-button[data-action="="] {
+button[data-action="Delete"],
+button[data-action="Enter"] {
     grid-column: span 2;
 }
 
@@ -89,5 +89,17 @@ button[data-action="="] {
     .operation {
         right: 10px;
 
+    }
+
+    .operation {
+        font-size: 10px;
+        font-weight: 100;
+        bottom: 10px;
+    }
+
+    .result {
+        font-weight: 600;
+        top: 10px;
+        font-size: 20px;
     }
 }

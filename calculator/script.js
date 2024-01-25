@@ -47,7 +47,7 @@ function handleOperatorClick(e) {
 }
 
 
-const equalButton = document.querySelector("[data-action='=']")
+const equalButton = document.querySelector("[data-action='Enter']")
 equalButton.addEventListener("click", handleEqualClick)
 
 function handleEqualClick(e) {
@@ -93,7 +93,7 @@ function calculation(operation) {
     return result;
 }
 
-const resetButton = document.querySelector("[data-action='c']")
+const resetButton = document.querySelector("[data-action='Delete']")
 resetButton.addEventListener("click", handleResetClick)
 
 function handleResetClick() {
@@ -104,7 +104,7 @@ function handleResetClick() {
     operationScreen.textContent = ""
 }
 
-const deleteButton = document.querySelector("[data-action='ce']")
+const deleteButton = document.querySelector("[data-action='Backspace']")
 deleteButton.addEventListener("click", handleDeleteClick)
 
 function handleDeleteClick() {
@@ -148,3 +148,23 @@ function handleDecimalClick() {
         operationScreen.textContent = calculatorData.operation;
     }
 }
+
+function keyboardInput(e) {
+    const key = e.key;
+    const allowedKeys = [
+        "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "+", "-", "*", "/", "=", ".", "Backspace", "c", "Delete"
+    ];
+
+    if (allowedKeys.includes(key)) {
+        const button = document.querySelector(`[data-action='${key}']`);
+        button.click();
+    }
+
+    if (key === "Enter") {
+        const button = document.querySelector(`[data-action='enter']`);
+        handleEqualClick();
+    }
+}
+
+window.addEventListener("keydown", keyboardInput);
